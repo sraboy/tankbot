@@ -10,6 +10,9 @@ namespace Eyes {
 	int16_t ServoPin;
 	int ServoMoveSafetyDelay = 250;
 
+	int last_ultra_sonic_time = 0;
+	int const sensor_delay = 100;
+
 	void Setup(Ports::Port ultrasonic_port, Ports::Port servo_port, bool servo_pin_one, int safety_delay_ms) {
 		Ultrasonic = MeUltrasonicSensor(static_cast<uint8_t>(ultrasonic_port));
 		ServoPort = MePort(servo_port);
@@ -58,8 +61,18 @@ namespace Eyes {
 		ServoMoveSafetyDelay -= 250;
 	}
 
+	//
+	// Ultrasonic sensor needs ~100ms between reads. If not enough
+	// time has passed since the last read, the function returns -1.0
+	//
 	double TryReadDistanceCm(int max_view_dist) {
-		return Ultrasonic.distanceCm(max_view_dist);
+		auto cur_time = millis();
+		double distance = -1.0;
+		if (cur_time - last_ultra_sonic_time >= sensor_delay) {
+			last_ultra_sonic_time = cur_time;
+			distance = Ultrasonic.distanceCm(max_view_dist);
+		}
+		return distance;
 	}
 
 	void Look(LookWhere pos, bool do_delay = true) {

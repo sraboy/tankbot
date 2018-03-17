@@ -34,20 +34,12 @@ void IrNumToDrive(Infrared::Button button) {
 	}
 }
 
-int last_ultra_sonic_time = 0;
 bool last_can_go = true;
-int const sensor_delay = 100;
+
 bool CanGoOnCloseObject() {
-	auto cur_time = millis();
-	//
-	// Ultrasonic sensor needs ~100ms between reads
-	//
-	if (cur_time - last_ultra_sonic_time >= sensor_delay) {
-		
-		last_ultra_sonic_time = cur_time;
-		
-		int const max_view_dist = 400;
-		double distance = Eyes::TryReadDistanceCm();
+
+	double distance = Eyes::TryReadDistanceCm();
+	if (distance > 0.0) {
 		Serial.print(F("Distance: "));
 		Serial.println(distance);
 		display.display(distance);

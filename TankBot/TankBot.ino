@@ -27,7 +27,7 @@ void IrNumToDrive(Infrared::Button button) {
 	switch (button) {
 	case Infrared::Button::NUM0:
 		//Serial.println("Got 0");
-		Drive::ReverseRight();
+		Drive::ReverseLeft();
 		break;
 	default:
 		//Serial.print("Got ");
@@ -89,7 +89,7 @@ void setup() {
 	cb.OnRight = Drive::TurnRight;
 	cb.OnD = Drive::ForwardLeft;
 	cb.OnE = Drive::ForwardRight;
-	cb.OnF = Drive::ReverseLeft;
+	cb.OnF = Drive::ReverseRight;
 	cb.OnNum = IrNumToDrive;
 
 	Infrared::Setup(Ports::Port::P6, &cb);

@@ -17,9 +17,11 @@
 #include "Drive.h"
 #include "Infrared.h"
 
-MeUltrasonicSensor ultrasonic_sensor(PORT_3);
-Me7SegmentDisplay display(PORT_4);
-MePotentiometer pot(PORT_7);
+MeUltrasonicSensor ultrasonic_sensor(PORT_4);
+Me7SegmentDisplay display(PORT_3);
+Servo servo;
+MePort servo_port(PORT_8);
+int16_t servo_pin = servo_port.pin2();
 
 void IrNumToDrive(Infrared::Button button) {
 	switch (button) {
@@ -37,20 +39,21 @@ void IrNumToDrive(Infrared::Button button) {
 
 int last_ultra_sonic_time = 0;
 bool last_can_go = true;
-double last_distance = 0.0;
 int const sensor_delay = 100;
 bool CanGoOnCloseObject() {
 	auto cur_time = millis();
+	//
+	// Ultrasonic sensor needs ~100ms between reads
+	//
 	if (cur_time - last_ultra_sonic_time >= sensor_delay) {
+		
 		last_ultra_sonic_time = cur_time;
-		int p = pot.read();
-		int max_dist = p / 2.5;
-		Serial.print(F("Max Distance: "));
-		Serial.println(last_distance);
-		last_distance = ultrasonic_sensor.distanceCm(max_dist);
+		
+		int const max_view_dist = 400;
+		double distance = ultrasonic_sensor.distanceCm(max_view_dist);
 		Serial.print(F("Distance: "));
-		Serial.println(last_distance);
-		display.display(last_distance);
+		Serial.println(distance);
+		display.display(distance);
 
 		double stop_distance = 8.0;
 		int cur_spd = Drive::GetCurrentSpeed();
@@ -60,7 +63,7 @@ bool CanGoOnCloseObject() {
 			stop_distance = 4.0;
 		}
 
-		if (last_distance < stop_distance) {
+		if (distance < stop_distance) {
 			last_can_go = false;
 			return last_can_go;
 		} else {
@@ -95,15 +98,18 @@ void setup() {
 	display.init();
 	display.set(BRIGHTNESS_2);
 
-	delay(250);
+	servo.attach(servo_pin);
+
+	servo.write(120);
+	delay(500);		// servo may have a long way to move
+	servo.write(180);
+	delay(250);		// servo only moving 60* now, delay for buzzer too
 	buzzerOn();
-	delay(100);
+	delay(100);		// buzzer delay
 	buzzerOff();
-	delay(250);
+	delay(500);		// short pause to let everything finish
 }
 
 void loop() {
-
 	Infrared::Process();
-
 }

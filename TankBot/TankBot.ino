@@ -533,7 +533,7 @@ void loop() {
 		}
 	}
 	Infrared::Process();
-	if (starter_mode == 1) {
-		Drive::ultrCarProcess();
-	}
+	//if (starter_mode == 1) {
+	//	Drive::ultrCarProcess();
+	//}
 }

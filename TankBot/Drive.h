@@ -23,8 +23,6 @@ namespace Drive {
 	void SetSpeedLevel(int new_speed);
 	void SetSpeedRaw(int new_speed);
 
-	void ultrCarProcess();
-
 	void Setup(Ports::Port portLeft = Ports::Port::PM1, Ports::Port portRight = Ports::Port::PM2);
 }
 

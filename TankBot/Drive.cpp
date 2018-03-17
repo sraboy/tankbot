@@ -8,7 +8,6 @@ namespace Drive {
 
 	MeDCMotor dc;
 	Port Left, Right;
-
 	int CurrentSpeed = 0;
 
 	void Setup(Port portLeft, Port portRight) {
@@ -92,29 +91,4 @@ namespace Drive {
 		CurrentSpeed = new_speed;
 	}
 
-	void ultrCarProcess() {}
-	//	distance = ultrasonic_sensor.distanceCm();
-	//	randomSeed(analogRead(A4));
-	//	if ((distance > 10) && (distance < 40)) {
-	//		randnum = random(300);
-	//		if ((randnum > 190) && (!rightflag)) {
-	//			leftflag = true;
-	//			DriveTurnLeft();
-	//		} else {
-	//			rightflag = true;
-	//			DriveTurnRight();
-	//		}
-	//	} else if (distance < 10) {
-	//		randnum = random(300);
-	//		if (randnum > 190) {
-	//			DriveBackwardAndTurnLeft();
-	//		} else {
-	//			DriveBackwardAndTurnRight();
-	//		}
-	//	} else {
-	//		leftflag = false;
-	//		rightflag = false;
-	//		DriveForward();
-	//	}
-	//}
 } //namespace Drive

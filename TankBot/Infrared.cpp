@@ -120,10 +120,8 @@ namespace Infrared {
 			Callbacks.OnNum(Button::NUM0);
 			break;
 		default:
-
 			Drive::Stop();
 			break;
 		}
 	}
-
 } //namespace Infrared

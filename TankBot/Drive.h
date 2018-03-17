@@ -25,6 +25,7 @@ namespace Drive {
 
 	void SetFwdNoGoCheck(bool(*)(void));
 
+	int GetCurrentSpeed();
 	void Setup(Ports::Port portLeft = Ports::Port::PM1, Ports::Port portRight = Ports::Port::PM2);
 }
 

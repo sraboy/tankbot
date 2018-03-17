@@ -52,6 +52,7 @@ namespace Drive {
 	}
 
 	void Reverse() {
+		CheckSensorVal();
 		dc.reset(Left);
 		dc.run(-CurrentSpeed);
 		dc.reset(Right);
@@ -75,6 +76,7 @@ namespace Drive {
 	}
 
 	void ReverseLeft() {
+		CheckSensorVal();
 		dc.reset(Left);
 		dc.run(-CurrentSpeed / 2);
 		dc.reset(Right);
@@ -82,6 +84,7 @@ namespace Drive {
 	}
 
 	void ReverseRight() {
+		CheckSensorVal();
 		dc.reset(Left);
 		dc.run(-CurrentSpeed);
 		dc.reset(Right);
@@ -89,6 +92,7 @@ namespace Drive {
 	}
 
 	void TurnLeft() {
+		CheckSensorVal();
 		dc.reset(Left);
 		dc.run(-max(CurrentSpeed, MinTurnSpeed));
 		dc.reset(Right);
@@ -96,6 +100,7 @@ namespace Drive {
 	}
 
 	void TurnRight() {
+		CheckSensorVal();
 		dc.reset(Left);
 		dc.run(max(CurrentSpeed, MinTurnSpeed));
 		dc.reset(Right);
@@ -106,13 +111,18 @@ namespace Drive {
 	// Sets the speed to new_speed * SpeedFactor
 	//
 	void SetSpeedLevel(int new_speed) {
+		CheckSensorVal();
 		CurrentSpeed = new_speed * SpeedFactor;
 	}
 
 	void SetSpeedRaw(int new_speed) {
+		CheckSensorVal();
 		CurrentSpeed = new_speed;
 	}
 
+	int GetCurrentSpeed() {
+		return CurrentSpeed;
+	}
 
 	void SetFwdNoGoCheck(bool(*check_val)(void)) {
 		CheckSensorVal = check_val;

@@ -18,8 +18,8 @@
 #include "Infrared.h"
 
 MeUltrasonicSensor ultrasonic_sensor(PORT_3);
-
-int last_ultra_sonic_time = 0;
+Me7SegmentDisplay display(PORT_4);
+MePotentiometer pot(PORT_7);
 
 void IrNumToDrive(Infrared::Button button) {
 	switch (button) {
@@ -35,16 +35,31 @@ void IrNumToDrive(Infrared::Button button) {
 	}
 }
 
+int last_ultra_sonic_time = 0;
 bool last_can_go = true;
+double last_distance = 0.0;
+int const sensor_delay = 100;
 bool CanGoOnCloseObject() {
 	auto cur_time = millis();
-	if (cur_time - last_ultra_sonic_time > 99) {
+	if (cur_time - last_ultra_sonic_time >= sensor_delay) {
 		last_ultra_sonic_time = cur_time;
-		double cm = ultrasonic_sensor.distanceCm();
-		Serial.print("Distance: ");
-		Serial.println(cm);
+		int p = pot.read();
+		int max_dist = p / 2.5;
+		Serial.print(F("Max Distance: "));
+		Serial.println(last_distance);
+		last_distance = ultrasonic_sensor.distanceCm(max_dist);
+		Serial.print(F("Distance: "));
+		Serial.println(last_distance);
+		display.display(last_distance);
 
-		if (cm < 10.0) {
+		double stop_distance = 8.0;
+		int cur_spd = Drive::GetCurrentSpeed();
+		if (cur_spd > 180) {
+			stop_distance = 12.0;
+		} else if (cur_spd < 40) {
+			stop_distance = 4.0;
+		}
+		if (last_distance < stop_distance) {
 			last_can_go = false;
 			return last_can_go;
 		} else {
@@ -80,7 +95,11 @@ void setup() {
 
 	Infrared::Setup(Ports::Port::P6, &cb);
 	Serial.println("Setup complete");
+
+	display.init();
+	display.set(BRIGHTNESS_2);
 }
+
 void loop() {
 
 	Infrared::Process();

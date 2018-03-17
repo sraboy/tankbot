@@ -16,12 +16,9 @@
 #include "Port.h"
 #include "Drive.h"
 #include "Infrared.h"
+#include "Eyes.h"
 
-MeUltrasonicSensor ultrasonic_sensor(PORT_4);
 Me7SegmentDisplay display(PORT_3);
-Servo servo;
-MePort servo_port(PORT_8);
-int16_t servo_pin = servo_port.pin2();
 
 void IrNumToDrive(Infrared::Button button) {
 	switch (button) {
@@ -50,7 +47,7 @@ bool CanGoOnCloseObject() {
 		last_ultra_sonic_time = cur_time;
 		
 		int const max_view_dist = 400;
-		double distance = ultrasonic_sensor.distanceCm(max_view_dist);
+		double distance = Eyes::TryReadDistanceCm();
 		Serial.print(F("Distance: "));
 		Serial.println(distance);
 		display.display(distance);
@@ -97,13 +94,9 @@ void setup() {
 
 	display.init();
 	display.set(BRIGHTNESS_2);
+	Eyes::Setup(Ports::P4, Ports::P8, false, 50);
 
-	servo.attach(servo_pin);
-
-	servo.write(120);
-	delay(500);		// servo may have a long way to move
-	servo.write(180);
-	delay(250);		// servo only moving 60* now, delay for buzzer too
+	delay(250);		// wait on everything above to finish
 	buzzerOn();
 	delay(100);		// buzzer delay
 	buzzerOff();

@@ -3,12 +3,11 @@
 
 namespace Infrared {
 	MeInfraredReceiver ir_recv;
-	button_callbacks Callbacks;
+	button_callbacks * Callbacks;
 
-	void Setup(Ports::Port port, button_callbacks callbacks) {
+	void Setup(Ports::Port port, button_callbacks* callbacks) {
 		ir_recv = MeInfraredReceiver(static_cast<uint8_t>(port));
 		ir_recv.begin();
-		Callbacks.OnUp = no_callback;
 		Callbacks = callbacks;
 	}
 
@@ -57,67 +56,67 @@ namespace Infrared {
 
 		switch (pressed) {
 		case IR_BUTTON_UP:
-			Callbacks.OnUp();
+			Callbacks->OnUp();
 			break;
 		case IR_BUTTON_DOWN:
-			Callbacks.OnDown();
+			Callbacks->OnDown();
 			break;
 		case IR_BUTTON_LEFT:
-			Callbacks.OnLeft();
+			Callbacks->OnLeft();
 			break;
 		case IR_BUTTON_RIGHT:
-			Callbacks.OnRight();
+			Callbacks->OnRight();
 			break;
 		case IR_BUTTON_A:
-			Callbacks.OnA();
+			Callbacks->OnA();
 			break;
 		case IR_BUTTON_B:
-			Callbacks.OnB();
+			Callbacks->OnB();
 			break;
 		case IR_BUTTON_C:
-			Callbacks.OnC();
+			Callbacks->OnC();
 			break;
 		case IR_BUTTON_D:
-			Callbacks.OnD();
+			Callbacks->OnD();
 			break;
 		case IR_BUTTON_E:
-			Callbacks.OnE();
+			Callbacks->OnE();
 			break;
 		case IR_BUTTON_F:
-			Callbacks.OnF();
+			Callbacks->OnF();
 			break;
 		case IR_BUTTON_SETTING:
-			Callbacks.OnSetting();
+			Callbacks->OnSetting();
 			break;
 		case IR_BUTTON_9:
-			Callbacks.OnNum(Button::NUM9);
+			Callbacks->OnNum(Button::NUM9);
 			break;
 		case IR_BUTTON_8:
-			Callbacks.OnNum(Button::NUM8);
+			Callbacks->OnNum(Button::NUM8);
 			break;
 		case IR_BUTTON_7:
-			Callbacks.OnNum(Button::NUM7);
+			Callbacks->OnNum(Button::NUM7);
 			break;
 		case IR_BUTTON_6:
-			Callbacks.OnNum(Button::NUM6);
+			Callbacks->OnNum(Button::NUM6);
 			break;
 		case IR_BUTTON_5:
-			Callbacks.OnNum(Button::NUM5);
+			Callbacks->OnNum(Button::NUM5);
 			break;
 		case IR_BUTTON_4:
-			Callbacks.OnNum(Button::NUM4);
+			Callbacks->OnNum(Button::NUM4);
 			break;
 		case IR_BUTTON_3:
-			Callbacks.OnNum(Button::NUM3);
+			Callbacks->OnNum(Button::NUM3);
 			break;
 		case IR_BUTTON_2:
-			Callbacks.OnNum(Button::NUM2);
+			Callbacks->OnNum(Button::NUM2);
 			break;
 		case IR_BUTTON_1:
-			Callbacks.OnNum(Button::NUM1);
+			Callbacks->OnNum(Button::NUM1);
 			break;
 		case IR_BUTTON_0:
-			Callbacks.OnNum(Button::NUM0);
+			Callbacks->OnNum(Button::NUM0);
 			break;
 		default:
 			Drive::Stop();

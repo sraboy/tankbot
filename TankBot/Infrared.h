@@ -65,10 +65,8 @@ namespace Infrared {
 
 	} button_callbacks;
 
-
 	void Process();
-	void Setup(Ports::Port, button_callbacks);
-
+	void Setup(Ports::Port, button_callbacks*);
 
 }
 

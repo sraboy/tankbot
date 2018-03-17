@@ -21,6 +21,7 @@ namespace Eyes {
 	void Look(LookWhere, bool do_delay = true);
 	int GetPos();
 	void Test();
-}
+
+} //namespace Eyes
 
 #endif

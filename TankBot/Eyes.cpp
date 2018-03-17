@@ -8,10 +8,12 @@ namespace Eyes {
 	Servo Neck;
 	MePort ServoPort;
 	int16_t ServoPin;
-	int ServoMoveSafetyDelay = 250;
 
 	int last_ultra_sonic_time = 0;
-	int const sensor_delay = 100;
+
+	int ServoMoveSafetyDelay = 250;
+	int const UltrasonicReadMinDelay = 100;
+	int const UltrasonicReadDelay = UltrasonicReadMinDelay * 2;
 
 	void Setup(Ports::Port ultrasonic_port, Ports::Port servo_port, bool servo_pin_one, int safety_delay_ms) {
 		Ultrasonic = MeUltrasonicSensor(static_cast<uint8_t>(ultrasonic_port));
@@ -68,7 +70,7 @@ namespace Eyes {
 	double TryReadDistanceCm(int max_view_dist) {
 		auto cur_time = millis();
 		double distance = -1.0;
-		if (cur_time - last_ultra_sonic_time >= sensor_delay) {
+		if (cur_time - last_ultra_sonic_time >= UltrasonicReadDelay) {
 			last_ultra_sonic_time = cur_time;
 			distance = Ultrasonic.distanceCm(max_view_dist);
 		}
@@ -96,4 +98,4 @@ namespace Eyes {
 		Neck.write(value);
 		return old_pos;
 	}
-}
+} //namespace Eyes

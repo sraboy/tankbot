@@ -2,9 +2,9 @@
 #define _INFRARED_H_
 #include <MeInfraredReceiver.h>
 
-namespace Infrared {
+extern MeInfraredReceiver infraredReceiverDecode;
 
-	extern MeInfraredReceiver infraredReceiverDecode;
+namespace Infrared {
 
 	enum IrButton : uint8_t {
 		A = 0x45,

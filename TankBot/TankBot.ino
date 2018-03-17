@@ -59,6 +59,7 @@ bool CanGoOnCloseObject() {
 		} else if (cur_spd < 40) {
 			stop_distance = 4.0;
 		}
+
 		if (last_distance < stop_distance) {
 			last_can_go = false;
 			return last_can_go;
@@ -75,11 +76,6 @@ Infrared::button_callbacks cb;
 
 void setup() {
 	Serial.begin(9600);
-	delay(500);
-	buzzerOn();
-	delay(100);
-	buzzerOff();
-	delay(500);
 
 	Drive::Setup();
 	Drive::SetFwdNoGoCheck(CanGoOnCloseObject);
@@ -98,6 +94,12 @@ void setup() {
 
 	display.init();
 	display.set(BRIGHTNESS_2);
+
+	delay(250);
+	buzzerOn();
+	delay(100);
+	buzzerOff();
+	delay(250);
 }
 
 void loop() {

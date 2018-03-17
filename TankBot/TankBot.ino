@@ -13,10 +13,11 @@
 #include <SoftwareSerial.h>
 #include <Arduino.h>
 #include <MeOrion.h>
+#include "Port.h"
 #include "Drive.h"
 #include "Infrared.h"
 
-MeInfraredReceiver infraredReceiverDecode(PORT_6);
+//MeInfraredReceiver infraredReceiverDecode(PORT_6);
 
 MeUltrasonicSensor ultrasonic_sensor(PORT_3);
 
@@ -178,7 +179,7 @@ void writeSerial(unsigned char c) {
 
 void readSerial() {
 	isAvailable = false;
-	if (Serial.available()>0) {
+	if (Serial.available() > 0) {
 		isAvailable = true;
 		serialRead = Serial.read();
 	}
@@ -210,7 +211,7 @@ void parseData() {
 			  break;
 	case RESET: {
 		//reset
-		Drive::Reset();
+		Drive::Stop();
 		callOK();
 	}
 				break;
@@ -237,7 +238,7 @@ void sendString(String s) {
 	int l = s.length();
 	writeSerial(4);
 	writeSerial(l);
-	for (int i = 0; i<l; i++) {
+	for (int i = 0; i < l; i++) {
 		writeSerial(s.charAt(i));
 	}
 }
@@ -294,23 +295,23 @@ void runModule(int device) {
 	int port = readBuffer(6);
 	int pin = port;
 	switch (device) {
-	//case MOTOR: {
-	//	controlflag = BLUE_TOOTH;
-	//	int speed = readShort(7);
-	//	dc.reset(port);
-	//	dc.run(speed);
-	//}
-	//			break;
-	//case JOYSTICK: {
-	//	controlflag = BLUE_TOOTH;
-	//	int leftSpeed = readShort(6);
-	//	dc.reset(M1);
-	//	dc.run(leftSpeed);
-	//	int rightSpeed = readShort(8);
-	//	dc.reset(M2);
-	//	dc.run(rightSpeed);
-	//}
-	
+		//case MOTOR: {
+		//	controlflag = BLUE_TOOTH;
+		//	int speed = readShort(7);
+		//	dc.reset(port);
+		//	dc.run(speed);
+		//}
+		//			break;
+		//case JOYSTICK: {
+		//	controlflag = BLUE_TOOTH;
+		//	int leftSpeed = readShort(6);
+		//	dc.reset(M1);
+		//	dc.run(leftSpeed);
+		//	int rightSpeed = readShort(8);
+		//	dc.reset(M2);
+		//	dc.run(rightSpeed);
+		//}
+
 	case COMMON_COMMONCMD: {
 		int slot = readBuffer(7);
 		int subcmd = readBuffer(8);
@@ -325,9 +326,9 @@ void runModule(int device) {
 		}
 	}
 						   break;
-	
-	
-	
+
+
+
 	case DIGITAL: {
 		pinMode(pin, OUTPUT);
 		int v = readBuffer(7);
@@ -340,7 +341,7 @@ void runModule(int device) {
 		analogWrite(pin, v);
 	}
 			  break;
-	
+
 	case TIMER: {
 		lastTime = millis() / 1000.0;
 	}
@@ -368,7 +369,7 @@ void readSensor(int device) {
 		sendFloat(value);
 	}
 							 break;
-	
+
 	case  POTENTIONMETER: {
 		if (generalDevice.getPort() != port) {
 			generalDevice.reset(port);
@@ -378,7 +379,7 @@ void readSensor(int device) {
 		sendFloat(value);
 	}
 						  break;
-	
+
 	case  PIRMOTION: {
 		if (generalDevice.getPort() != port) {
 			generalDevice.reset(port);
@@ -413,7 +414,7 @@ void readSensor(int device) {
 		sendFloat(value);
 	}
 					  break;
-	
+
 	case  VERSION: {
 		sendString(mVersion);
 	}
@@ -456,6 +457,17 @@ void readSensor(int device) {
 	}
 }
 
+void IrNumToDrive(Infrared::Button button) {
+	switch (button) {
+	case Infrared::Button::NUM0:
+		Drive::ReverseRight();
+		break;
+	default:
+		Drive::SetSpeedLevel(Infrared::ButtonVal(button));
+		break;
+	}
+}
+
 void setup() {
 	pinMode(13, OUTPUT);
 	digitalWrite(13, HIGH);
@@ -468,16 +480,29 @@ void setup() {
 	buzzerOff();
 	delay(500);
 	randomSeed(analogRead(0));
-	Drive::Stop();
-	infraredReceiverDecode.begin();
-	Serial.print("Version: ");
+
+	Drive::Setup();
+
+	Infrared::button_callbacks cb;
+	cb.OnUp = Drive::Forward;
+	cb.OnDown = Drive::Reverse;
+	cb.OnLeft = Drive::TurnLeft;
+	cb.OnRight = Drive::TurnRight;
+	cb.OnD = Drive::ForwardLeft;
+	cb.OnE = Drive::ForwardRight;
+	cb.OnF = Drive::ReverseLeft;
+	cb.OnNum = IrNumToDrive;
+
+	Infrared::Setup(Ports::Port::P6, cb);
+
+	Serial.print(F("Makeblock Version: "));
 	Serial.println(mVersion);
 }
 void loop() {
-	
+
 	currentTime = millis() / 1000.0 - lastTime;
 	readSerial();
-	
+
 	if (isAvailable) {
 		unsigned char c = serialRead & 0xff;
 		if ((c == 0x55) && (isStart == false)) {

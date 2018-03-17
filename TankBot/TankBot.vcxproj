@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClInclude Include="Drive.h" />
     <ClInclude Include="Infrared.h" />
+    <ClInclude Include="Port.h" />
     <ClInclude Include="__vm\.TankBot.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>

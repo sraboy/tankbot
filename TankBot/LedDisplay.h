@@ -46,7 +46,6 @@ namespace LedDisplay {
 	void Display(double d);
 	void Write(uint8_t * data);
 	void Setup(Ports::Port, Brightness);
-	
 } //namespace LedDisplay
 
 #endif

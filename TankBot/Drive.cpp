@@ -1,13 +1,9 @@
 #include <MeDCMotor.h>
 #include "Drive.h"
 
-using namespace Ports;
-
-//extern MeUltrasonicSensor ultrasonic_sensor;// (PORT_3);
 namespace Drive {
-
 	MeDCMotor dc;
-	Port Left, Right;
+	Ports::Port Left, Right;
 	int CurrentSpeed = 0;
 	int StopVal = 0;
 	//
@@ -19,7 +15,7 @@ namespace Drive {
 
 	bool(*CheckSensorVal)() = nullptr;
 
-	void Setup(Port portLeft, Port portRight) {
+	void Setup(Ports::Port portLeft, Ports::Port portRight) {
 		Left = portLeft;
 		Right = portRight;
 		CurrentSpeed = MaxSpeed * 0.66;
@@ -37,7 +33,7 @@ namespace Drive {
 		bool can_go = true;
 		if (CheckSensorVal) {
 			can_go = CheckSensorVal();
-			//Serial.print("can_go: ");
+			//Serial.print(F("can_go: "));
 			//Serial.println(can_go);
 		}
 		return can_go;

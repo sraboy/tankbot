@@ -99,7 +99,6 @@ void SetCallbacks(IrCallbackSet cbset) {
 		ir_btn_callbacks.OnSetting = SetCallbacksEyes;
 		break;
 	case IrCallbackSet::CbEyes:
-
 		mode[1] = LedDisplay::Char::e;
 		mode[2] = LedDisplay::Char::y;
 		mode[3] = LedDisplay::Char::e;
@@ -140,7 +139,7 @@ void setup() {
 	Serial.begin(9600);
 	LedDisplay::Setup(Ports::P3, LedDisplay::Brightness::BRT_3);
 	
-	Drive::Setup();
+	Drive::Setup(Ports::Port::PM1, Ports::Port::PM2);
 	Drive::SetFwdNoGoCheck(CanGoOnCloseObject);
 	SetCallbacks(IrCallbackSet::CbDrive);
 	

@@ -20,13 +20,13 @@ namespace Drive {
 	void TurnLeft();
 	void TurnRight();
 
-	void SetSpeedLevel(int new_speed);
-	void SetSpeedRaw(int new_speed);
+	void SetSpeedLevel(int);
+	void SetSpeedRaw(int);
 
 	void SetFwdNoGoCheck(bool(*)(void));
 
 	int GetCurrentSpeed();
-	void Setup(Ports::Port portLeft = Ports::Port::PM1, Ports::Port portRight = Ports::Port::PM2);
+	void Setup(Ports::Port portLeft, Ports::Port portRight);
 }
 
 #endif

@@ -17,4 +17,5 @@ namespace LedDisplay {
 	void Display(double d) {
 		display.display(d);
 	}
+
 } //namespace LedDisplay

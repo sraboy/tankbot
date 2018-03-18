@@ -1,28 +1,18 @@
 /*************************************************************************
-* File Name          :starter_factory_firmware.ino
-* Author             : Ander, Mark Yan
-* Updated            : Ander, Mark Yan
-* Version            : V0a.01.007
-* Date               : 21/06/2017
-* Description        : Firmware for Makeblock Electronic modules with Scratch.
-* License            : CC-BY-SA 3.0
-* Copyright (C) 2013 - 2016 Maker Works Technology Co., Ltd. All right reserved.
-* http://www.makeblock.cc/
+* File Name          : TankBot.ino
+* Author             : Steve Lavoie
+* Description        : Firmware for modified Makeblock Starter Robot Kit
+* License            : MIT, or GPL2 when linked against GPL2 code
 **************************************************************************/
+
 enum IrCallbackSet {
 	CbDrive = 1,
 	CbEyes = 2
 };
 void SetCallbacks(IrCallbackSet cbset);
-#include <Wire.h>
-#include <SoftwareSerial.h>
-#include <Arduino.h>
-#include <MeOrion.h>
-#include "Port.h"
-#include "Drive.h"
-#include "Infrared.h"
-#include "Eyes.h"
-#include "LedDisplay.h"
+
+#include "Tankbot.h"
+
 
 //
 // See CanGoOnCloseObject()
@@ -149,9 +139,7 @@ void setup() {
 	LedDisplay::Display(Eyes::TryReadDistanceCm());
 
 	delay(250);		// wait on everything above to finish
-	buzzerOn();
-	delay(100);		// buzzer delay
-	buzzerOff();
+	buzz();
 	delay(500);		// short pause to let everything finish
 	Serial.println(F("Setup complete"));
 }

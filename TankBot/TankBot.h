@@ -19,6 +19,31 @@
 #include "Eyes.h"
 #include "LedDisplay.h"
 
+
+namespace TankBot {
+
+	enum IrCallbackSet {
+		CbDrive = 1,
+		CbEyes = 2
+	};
+	
+	Infrared::button_callbacks ir_btn_callbacks;
+
+	void SetCallbacks(IrCallbackSet cbset);
+	
+	//
+	// Callbacks
+	//
+	void SetCallbacksEyes();
+	void SetCallbacksDrive();
+	void LookAhead();
+	void LookDown();
+	void IrNumToDrive(Infrared::Button button);
+}
+
+void setup();
+void loop();
+
 inline void buzz(int delay_time = 100) {
 	pinMode(SCL, OUTPUT);
 	digitalWrite(SCL, HIGH);

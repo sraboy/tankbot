@@ -1,5 +1,5 @@
 #include "Eyes.h"
-#include <utility/Servo.h> //MakeBlock's replacement header
+#include <Servo.h>
 #include <MeUltrasonicSensor.h>
 
 namespace Eyes {

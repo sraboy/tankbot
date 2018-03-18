@@ -24,6 +24,9 @@ namespace LedDisplay {
 		BRT_7
 	};
 
+	//
+	// Ref: https://github.com/avishorp/TM1637/blob/master/docs/TM1637_V2.4_EN.pdf
+	//
 	enum Char : uint32_t {
 		A = SEG_E | SEG_F | SEG_A | SEG_B | SEG_C | SEG_G,
 		//B

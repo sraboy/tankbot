@@ -1,6 +1,7 @@
 #include "LedDisplay.h"
 #include <Me7SegmentDisplay.h>
 
+
 namespace LedDisplay {
 	Me7SegmentDisplay display;
 
@@ -10,11 +11,12 @@ namespace LedDisplay {
 		display.setBrightness(bt);
 	}
 
-	void Write(uint8_t * data) {
-		display.write(data);
+	void Write(char * data) {
+		LedWord str(data);
+		display.write(str.data());
 	}
 
-	void Display(double d) {
+	void Write(double d) {
 		display.display(d);
 	}
 

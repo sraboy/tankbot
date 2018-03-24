@@ -14,7 +14,11 @@
 SoftwareSerial bt_serial(10, 11); // RX, TX
 
 enum Commands {
-  NONE    = 0x0,
+  //
+  // We'll know when the has closed the controller/terminal app
+  // and we may need to act for safety.
+  //
+  NO_USER    = 0x0,
   FWD     = 0x2,
   REV     = 0x8,
   LEFT    = 0x4,
@@ -30,17 +34,13 @@ enum Commands {
   GET_TEMP  = 0xf,
 
   //
-  // We'll know when the user disconnects Bluetooth
-  //
-  DISCONNECT = 0xfe,
-  //
   // When movement buttons are released, this is sent
   // so we know to stop driving the motors.
   //
-  STOP     = 0xff
+  BTN_RELEASE = 0xff
 };
 
-Commands last_cmd = Commands::STOP;
+Commands last_cmd = Commands::BTN_RELEASE;
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -64,46 +64,58 @@ void loop() {
   }
 
   switch(last_cmd) {
-  case Commands::NONE:
-    Serial.println("NONE");
+  case Commands::NO_USER:
+    Serial.println("PANIC! User has disconnected!");
     digitalWrite(LED_BUILTIN, LOW);
-      break;
-  case Commands::STOP:
-    Serial.println("STOP");
+    break;
+  case Commands::BTN_RELEASE:
     digitalWrite(LED_BUILTIN, LOW);
-      break;
+    break;
   case Commands::FWD:
     Serial.println("FWD");
     digitalWrite(LED_BUILTIN, HIGH);
-      break;
+    break;
   case Commands::REV:
-      Serial.println("REV");
-      break;
+    Serial.println("REV");
+    break;
   case Commands::LEFT:
-      break;
+    Serial.println("LEFT");
+    break;
   case Commands::RIGHT:
-      break;
+    Serial.println("RIGHT");
+    break;
   case Commands::FWDLEFT:
-      break;
+    Serial.println("FWDLEFT");
+    break;
   case Commands::FWDRIGHT:
-      break;
+    Serial.println("FWDRIGHT");
+    break;
   case Commands::REVLEFT:
-      break;
+    Serial.println("REVLEFT");
+    break;
   case Commands::REVRIGHT:
-      break;
+    Serial.println("REVRIGHT");
+    break;
   case Commands::LIGHTS:
-      break;
+    Serial.println("LIGHTS");
+    break;
   case Commands::GET_DIST:
-      break;
+    Serial.println("GET_DIST");
+    break;
   case Commands::GET_GYRO:
-      break;
+    Serial.println("GET_GYRO");
+    break;
   case Commands::GET_TEMP:
-      break;
-    default:
+    Serial.println("GET_TEMP");
+    break;
+  case Commands::TURNAROUND:
+    Serial.println("TURNAROUND");
+    break;
+  default:
     Serial.print("Unknown command: ");
     Serial.println(last_cmd);
       digitalWrite(LED_BUILTIN, HIGH);
-      break;
+    break;
   }
 }
 

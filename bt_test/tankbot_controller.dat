@@ -1,25 +1,25 @@
-NAME,def,Fwd,def,Left,def,Right,def,Rev,def,Lights,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,
+NAME,FwdLeft,Fwd,FwdRt,Left,180,Right,RevLeft,Rev,RevRt,Lights,Dist,def,def,Gyro,Temp,def,def,def,def,def,def,def,def,def,def,
 
 CMD_TYPE,H,
 
 CMD_ASCII,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,
 
-CMD_HEX,FF,1,FF,3,FF,4,FF,2,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,
+CMD_HEX,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,
 
 ENABLE_STOPCMD_ASCII,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,
 
-ENABLE_STOPCMD_HEX,f,t,f,t,f,t,f,t,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,
+ENABLE_STOPCMD_HEX,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,
 
 STOPCMD_ASCII,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,def,
 
-STOPCMD_HEX,0,0,FF,0,FF,0,FF,0,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,
+STOPCMD_HEX,ff,ff,FF,ff,FF,ff,FF,ff,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,FF,
 
-VISIBLE,f,t,f,t,f,t,f,t,f,t,t,f,f,t,t,f,f,f,f,f,f,f,f,f,f,
+VISIBLE,t,t,t,t,t,t,t,t,t,t,t,f,f,t,t,f,f,f,f,f,f,f,f,f,f,
 
 REPEAT_TYPE,f,
 
 REPEAT_INTERVAL,100,
 
-REPEATABLE,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,
+REPEATABLE,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,
 
 REPEAT_INTERVAL_INDIVIDUAL,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,

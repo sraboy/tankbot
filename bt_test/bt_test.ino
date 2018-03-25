@@ -11,7 +11,7 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial bt_serial(10, 11); // RX, TX
+//SoftwareSerial bt_serial(10, 11); // RX, TX
 
 enum Commands {
   //
@@ -42,18 +42,27 @@ enum Commands {
 
 Commands last_cmd = Commands::BTN_RELEASE;
 
+inline void buzz(int delay_time = 100) {
+  pinMode(SCL, OUTPUT);
+  digitalWrite(SCL, HIGH);
+  delay(delay_time);
+  pinMode(SCL, OUTPUT);
+  digitalWrite(SCL, LOW);
+}
+
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
   Serial.begin(9600);
-  bt_serial.begin(9600);
+  //bt_serial.begin(9600);
   Serial.println("Setup done");
+  buzz();
 }
 
 void loop() {
   bool changed = false;
-  if(bt_serial.available() > 0){
-    int cur_cmd = bt_serial.read();
+  if(Serial.available() > 0){
+    Serial.println("Got serial data");
+    int cur_cmd = Serial.read();
     if (cur_cmd != last_cmd) {
       Serial.print(" *** New command: ");
       Serial.print(cur_cmd);

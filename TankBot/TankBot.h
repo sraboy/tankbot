@@ -15,31 +15,7 @@
 
 #include "Port.h"
 #include "Drive.h"
-#include "Infrared.h"
-#include "Eyes.h"
-#include "LedDisplay.h"
-
-
-namespace TankBot {
-
-	enum IrCallbackSet {
-		CbDrive = 1,
-		CbEyes = 2
-	};
-	
-	Infrared::button_callbacks ir_btn_callbacks;
-
-	void SetCallbacks(IrCallbackSet cbset);
-	
-	//
-	// Callbacks
-	//
-	void SetCallbacksEyes();
-	void SetCallbacksDrive();
-	void LookAhead();
-	void LookDown();
-	void IrNumToDrive(Infrared::Button button);
-}
+#include "BT12.h"
 
 void setup();
 void loop();

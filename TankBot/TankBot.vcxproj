@@ -87,6 +87,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BT12.h" />
     <ClInclude Include="Drive.h" />
     <ClInclude Include="Eyes.h" />
     <ClInclude Include="Infrared.h" />
@@ -96,6 +97,7 @@
     <ClInclude Include="__vm\.TankBot.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BT12.cpp" />
     <ClCompile Include="Drive.cpp" />
     <ClCompile Include="Eyes.cpp" />
     <ClCompile Include="Infrared.cpp" />

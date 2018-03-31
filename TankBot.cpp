@@ -73,15 +73,12 @@ void ProcessCmd(Bluetooth::BTCommand cmd) {
 
 } //namepsace TankBot
 
-
 void setup() {
   Serial.begin(9600);
   Bluetooth::Setup();
   Drive::Setup(M1, M2);
   //Drive::SetFwdNoGoCheck(CanGoOnCloseObject);
 
-  delay(250);   // wait on everything above to finish
-  buzz();
   delay(500);   // short pause to let everything finish
   Serial.println(F("Setup complete"));
 }
@@ -89,4 +86,7 @@ void setup() {
 void loop() {
   Bluetooth::BTCommand cmd = Bluetooth::Read();
   TankBot::ProcessCmd(cmd);
+
+  
+
 }

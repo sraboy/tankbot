@@ -1,3 +1,6 @@
+#ifndef _BT12_H_
+#define _BT12_H_
+
 namespace Bluetooth {
 
 enum BTCommand {
@@ -30,4 +33,6 @@ enum BTCommand {
 void Setup();
 BTCommand Read();
 
-}
+} //namespace BT12
+
+#endif

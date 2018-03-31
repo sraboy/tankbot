@@ -1,0 +1,13 @@
+{
+    "arduino.logLevel": "verbose",
+
+    //
+    // HACK: Fix Arduino intellisense
+    //
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.fontSize": 12,
+
+}

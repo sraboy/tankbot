@@ -3,7 +3,7 @@
 
 namespace Drive {
 	MeDCMotor dc;
-	Ports::Port Left, Right;
+	short LeftPort, RightPort;
 	int CurrentSpeed = 0;
 	int StopVal = 0;
 	//
@@ -15,17 +15,17 @@ namespace Drive {
 
 	bool(*CheckSensorVal)() = nullptr;
 
-	void Setup(Ports::Port portLeft, Ports::Port portRight) {
-		Left = portLeft;
-		Right = portRight;
+	void Setup(short ltPort, short rtPort) {
+		LeftPort = ltPort;
+		RightPort = rtPort;
 		CurrentSpeed = MaxSpeed * 0.66;
 		Stop();
 	}
 
 	void Stop() {
-		dc.reset(Left);
+		dc.reset(LeftPort);
 		dc.run(0);
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(0);
 	}
 
@@ -41,65 +41,65 @@ namespace Drive {
 
 	void Forward() {
 		bool can_go = CanGo();
-		dc.reset(Left);
+		dc.reset(LeftPort);
 		dc.run(can_go ? CurrentSpeed : 0);
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(can_go ? CurrentSpeed : 0);
 	}
 
 	void Reverse() {
-		CheckSensorVal();
-		dc.reset(Left);
+		//CheckSensorVal();
+		dc.reset(LeftPort);
 		dc.run(-CurrentSpeed);
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(-CurrentSpeed);
 	}
 
 	void ForwardLeft() {
 		bool can_go = CanGo();
-		dc.reset(Left);
+		dc.reset(LeftPort);
 		dc.run(can_go ? CurrentSpeed / 2 : 0);
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(can_go ? CurrentSpeed : 0);
 	}
 
 	void ForwardRight() {
 		bool can_go = CanGo();
-		dc.reset(Left);
+		dc.reset(LeftPort);
 		dc.run(can_go ? CurrentSpeed : 0);
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(can_go ? CurrentSpeed / 2 : 0);
 	}
 
 	void ReverseLeft() {
-		CheckSensorVal();
-		dc.reset(Left);
+		//CheckSensorVal();
+		dc.reset(LeftPort);
 		dc.run(-CurrentSpeed / 2);
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(-CurrentSpeed);
 	}
 
 	void ReverseRight() {
-		CheckSensorVal();
-		dc.reset(Left);
+		//CheckSensorVal();
+		dc.reset(LeftPort);
 		dc.run(-CurrentSpeed);
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(-CurrentSpeed / 2);
 	}
 
-	void TurnLeft() {
-		CheckSensorVal();
-		dc.reset(Left);
+	void Left() {
+		//CheckSensorVal();
+		dc.reset(LeftPort);
 		dc.run(-max(CurrentSpeed, MinTurnSpeed));
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(max(CurrentSpeed, MinTurnSpeed));
 	}
 
-	void TurnRight() {
-		CheckSensorVal();
-		dc.reset(Left);
+	void Right() {
+		//CheckSensorVal();
+		dc.reset(LeftPort);
 		dc.run(max(CurrentSpeed, MinTurnSpeed));
-		dc.reset(Right);
+		dc.reset(RightPort);
 		dc.run(-max(CurrentSpeed, MinTurnSpeed));
 	}
 
@@ -107,12 +107,12 @@ namespace Drive {
 	// Sets the speed to new_speed * SpeedFactor
 	//
 	void SetSpeedLevel(int new_speed) {
-		CheckSensorVal();
+		//CheckSensorVal();
 		CurrentSpeed = new_speed * SpeedFactor;
 	}
 
 	void SetSpeedRaw(int new_speed) {
-		CheckSensorVal();
+		//CheckSensorVal();
 		CurrentSpeed = new_speed;
 	}
 

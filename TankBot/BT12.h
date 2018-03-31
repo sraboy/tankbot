@@ -1,10 +1,6 @@
-#include "Port.h"
-
 namespace Bluetooth {
 
-typedef void(*ProcessCallback)(uint8_t);
-
-enum Commands {
+enum BTCommand {
     //
     // We'll know when the has closed the controller/terminal app
     // and we may need to act for safety.
@@ -31,10 +27,7 @@ enum Commands {
     BTN_RELEASE = 0xff
 };
 
-Commands last_cmd = Commands::BTN_RELEASE;
-
-ProcessCallback Process;
-
-void Setup(Ports::Port, ProcessCallback);
+void Setup();
+BTCommand Read();
 
 }

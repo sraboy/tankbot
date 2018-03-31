@@ -1,8 +1,9 @@
 #ifndef _TANKBOT_H
 #define _TANKBOT_H
-#include <Arduino.h>
-#include "Drive.h"
 #include "BT12.h"
+#include <Arduino.h>
+
+extern Bluetooth::BTCommand;
 
 namespace TankBot {
   void ProcessCmd(Bluetooth::BTCommand);

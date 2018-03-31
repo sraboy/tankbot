@@ -1,5 +1,7 @@
 #include "Tankbot.h"
 #include "Drive.h"
+#include "BT12.h"
+#include "Gyro.h"
 #include <MeOrion.h>
 
 namespace TankBot {
